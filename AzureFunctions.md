@@ -1,4 +1,4 @@
-Languages:
+## Languages
     There are three levels of support:
         Generally available (GA) - Fully supported and approved for production use.
         Preview - Not yet supported but is expected to reach GA status in the future.
@@ -18,6 +18,7 @@ Languages:
     Bash	                Experimental	
     PowerShell              Experimental
 
+## APIs
 
 The following namespaces are automatically imported and are therefore optional:
 1. System
@@ -78,7 +79,7 @@ On local machine, the following code shows how to read a file:
     }
 ```
 
-On Azure cloud, we usually use Azure Blob to store files. In consequence, Azure Functions uses Azure Blob to access files as well. In order to use Azure Blob, we need to integrate Azure Blob Storage as input or output based on how we want to manipulate it. For above example, we use the file as input. So we integrate Azure Blob Storage as Inputs. After that, we will have a `function.json` in same directory with `run.csx`. The following code shows how `function.json` looks like:
+On Azure cloud, we usually use Azure Blob to store files. Similarly, Azure Functions uses Azure Blob to access files as well. In order to use Azure Blob, we need to integrate Azure Blob Storage as input or output based on how we want to manipulate it. For the above example, we use the file as input. So we integrate Azure Blob Storage as Inputs. Afterward we will have a `function.json` in same directory with `run.csx`. The following code shows what `function.json` looks like:
 
 ```
 {
@@ -106,7 +107,7 @@ On Azure cloud, we usually use Azure Blob to store files. In consequence, Azure 
 }
 ```
 
-In order to dump the file, we can simply use log like this:
+In order to dump the file, we can simply use `log` as shown below:
 ```
 public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log, string myInputFile)
 {
