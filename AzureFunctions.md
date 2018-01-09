@@ -51,5 +51,67 @@ The following assemblies may be referenced by simple-name (for example, #r "Asse
 5. Microsoft.AspNet.WebHooks.Common
 6. Microsoft.Azure.NotificationHubs
 
+For framework assemblies, add references by using the #r "AssemblyName" directive.
 
-To use NuGet packages in a C# function, upload a project.json file to the function's folder in the function app's file system. Only the .NET Framework 4.6 is supported, so make sure that your project.json file specifies `net46`.
+
+To use NuGet packages in a C# function, upload a project.json file to the function's folder in the function app's file system. Only the `.NET Framework 4.6` is supported, so make sure that your project.json file specifies `net46`. When you upload a project.json file, the runtime gets the packages and automatically adds references to the package assemblies. You don't need to add `#r "AssemblyName" `directives. To use the types defined in the NuGet packages; just add the required `using` statements to your run.csx file.
+
+
+One example that shows different API surface is file IO related API.
+
+On local machine, the following code shows how to read a file:
+```
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // put this file in local computer
+            string path = @"C:\Users\guo\work\faas\testio\MyTest.txt";
+
+            // Open the file to read from.
+            string[] readText = File.ReadAllLines(path);
+            foreach (string s in readText)
+            {
+                Console.WriteLine(s);
+            }
+        }
+    }
+```
+
+On Azure cloud, we usually use Azure Blob to store files. In consequence, Azure Functions uses Azure Blob to access files as well. In order to use Azure Blob, we need to integrate Azure Blob Storage as input or output based on how we want to manipulate it. For above example, we use the file as input. So we integrate Azure Blob Storage as Inputs. After that, we will have a `function.json` in same directory with `run.csx`. The following code shows how `function.json` looks like:
+
+```
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in"
+    },
+    {
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
+    },
+    {
+      "type": "blob",
+      "name": "myInputFile",
+      "path": "myfiles/MyTest.txt",
+      "connection": "AzureWebJobsStorage",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}
+```
+
+In order to dump the file, we can simply use log like this:
+```
+public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log, string myInputFile)
+{
+    log.Info(myInputFile);
+
+    return req.CreateResponse(HttpStatusCode.OK);
+}
+```
