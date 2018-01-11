@@ -116,3 +116,21 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceW
     return req.CreateResponse(HttpStatusCode.OK);
 }
 ```
+
+## Work with other Azure Services
+Azure Functions integrates with various Azure and 3rd-party services. These services can trigger your function and start execution, or they can serve as input and output for your code. The following service integrations are supported by Azure Functions (updated by 10/03/2017):
+1. Azure Cosmos DB
+2. Azure Event Hubs
+3. Azure Event Grid
+4. Azure Mobile Apps (tables)
+5. Azure Notification Hubs
+6. Azure Service Bus (queues and topics)
+7. Azure Storage (blob, queues, and tables)
+8. GitHub (webhooks)
+9. On-premises (using Service Bus)
+10. Twilio (SMS messages)
+
+
+## References
+1. https://docs.microsoft.com/en-us/azure/azure-functions/
+2. Serverlessconf Austin '17 Keynote - John Gossman https://www.youtube.com/watch?v=O5QUBEPZrqM
