@@ -22,7 +22,7 @@ Because the `ProcessQueueMessage` method in this example has a `QueueTrigger` at
 
 The `QueueTrigger` attribute binds the inputText parameter to the value of the queue message. And the `Blob` attribute binds a `TextWriter` object to a blob named "blobname" in a container named "containername"."[2]
 
-As we can see from above sample code, an instance `JobHost host` is created first. Then `host` calls `RunAndBlock()`. We will analysis how this works, especially focus on how the funtion `ProcessQueueMessage()` is invoked.
+As we can see from above sample code, an instance `JobHost host` is created first. Then `host` calls `RunAndBlock()`. We will analyze how this works, especially focus on how the funtion `ProcessQueueMessage()` is invoked.
 
 We can see this path: `RunAndBlock()`->`Start()`->`StartAsync()`->`StartAsyncCore(cancellationToken)`->`EnsureHostInitializedAsync(cancellationToken)` as shown in following sample code, which is from source code [src/Microsoft.Azure.WebJobs.Host/JobHost.cs](https://github.com/Azure/azure-webjobs-sdk/blob/dev/src/Microsoft.Azure.WebJobs.Host/JobHost.cs).
 
@@ -140,7 +140,7 @@ Inside the function `EnsureHostInitializedAsync(cancellationToken)`, [Cancellati
 ```
 
 
-Before we go through the function `InitializeHostAsync`, we need to understand the class `JobHostConfiguration`, which represents the configuration settings for a `JobHost`. The instance of class `JobHostConfiguration` `_config` is created when we instance `JobHost`. It sets the storage account and adds necessary services Azure WebJobs needs such as:
+Before we go through the function `InitializeHostAsync`, we need to understand the class `JobHostConfiguration`, which represents the configuration settings for a `JobHost`. The instance of class `JobHostConfiguration` `_config` is created when we instantiate `JobHost`. It sets the storage account and adds necessary services Azure WebJobs needs such as:
 * JobActivator: creates instances of job classes when calling instance methods.
 * TypeLocator: defines a locator that identifies types that may contain functions for `JobHost` to execute.
 * NameResolver: defines a resolver for `name` variables in attribute values.
@@ -424,7 +424,7 @@ We have `functionExecutor` and `functionIndexProvider`. Then `functionIndexProvi
         }
 ```
 
-In above code, it first instances a `functionDescriptor`, whose defination is shown below:
+In above code, it first instantiates a `functionDescriptor`, whose defination is shown below:
 ```
     public class FunctionDescriptor
     {
